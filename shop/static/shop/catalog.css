@@ -1,0 +1,38 @@
+
+nav.navbar {
+    background-color: #1496ed;
+}
+
+
+
+.card {
+    width: 60%;
+    margin: auto;
+}
+footer.card-footer{
+    padding: 4px;
+}
+
+.buy-form{
+    margin: auto;
+}
+
+/*     setting section and container            */
+
+.section {
+    width: fit-content;
+    margin: auto;
+}
+.publish-form {
+    width: fit-content;
+    margin: auto;
+}
+
+iframe{
+  margin: auto;
+}
+#game_title{
+  text-align:center;
+  margin-bottom: 30px;
+}
+

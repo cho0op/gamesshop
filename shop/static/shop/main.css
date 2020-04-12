@@ -1,0 +1,28 @@
+nav.navbar {
+    background-color: #1496ed;
+}
+
+
+
+.card {
+    width: 60%;
+    margin: auto;
+}
+footer.card-footer{
+    padding: 4px;
+}
+
+.buy-form{
+    margin: auto;
+
+}
+
+/*     setting section and container            */
+
+.section {
+    width: fit-content;
+    margin: auto;
+}
+.container {
+    width: fit-content;
+}
