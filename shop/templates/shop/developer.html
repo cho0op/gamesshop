@@ -1,0 +1,37 @@
+{% extends "shop/developer_base.html" %}
+{% block content %}
+
+
+    <div class="columns">
+        <div class="column">
+            <div class="tile is-ancestor has-text-centered">
+                <div style="margin: auto;" class="tile is-parent">
+                    <div class="tile is-child box">
+                        <h1 class="title is-2"> Hello Developer, &nbsp<span
+                                style="color:#1496ed">{{ user.username }}</span></h1>
+
+
+
+                        <h2 class="title is-3">Welcome to the game shop.</h2>
+                        <h4 class="title is-4">This is your home page.</h4>
+                        <h4 class="title is-5">You can publish new games here:</h4>
+                        <a class="button is-info is-medium" href="{% url 'shop:publish' %}">Publish new game</a>
+                    </div>
+                </div>
+            </div>
+
+                <h2 class="title " style="color:#00d1b2">Purchasing statistics:</h2>
+                    {% for transaction in statistics %}
+                        <div class="box">
+                            <div class="content">
+                                <p class="title is-medium">{{ transaction.game.title }}</p>
+                                <p class="subtitle is-small">Buyer: {{ transaction.player.user }}</p>
+                                <p class="subtitle is-small">Time: {{ transaction.timestamp }}</p>
+                                <p class="subtitle is-small">Paid: {{ transaction.game.price }}€</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

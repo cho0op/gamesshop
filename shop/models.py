@@ -21,7 +21,7 @@ class Game(models.Model):
 class Transaction(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    paid_amount=models.FloatField()
+    paid_amount = models.FloatField()
     timestamp = models.DateField(default=timezone.now)
 
 # Create your models here.
