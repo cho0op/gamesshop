@@ -54,38 +54,39 @@ def home(request):
         return render(request, "shop/home.html",{"games":games})
     else:
         return HttpResponse(status=500)
+
 def create(request):
-    if request.method=="POST":
-        username=request.POST['username']
+    if request.method == "POST":
+        username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         developer = False
         try:
             if request.POST['developer']:
-                developer=True
+                developer = True
         except KeyError:
-            developer=False
+            developer = False
         if username is not None and email is not None and password is not None:
-            if not username or not password or not email:
-                return render(request, "shop/signup.html", {"error": "some error in data"})
+            if not username or not email or not password:
+                return render(request, "shop/signup.html", {"error": "Please fill in all required fields"})
             if User.objects.filter(username=username).exists():
-                return render(request, "shop/signup.html", {"error": "username exists"})
+                return render(request, "shop/signup.html", {"error": "Username already exists"})
             elif User.objects.filter(email=email).exists():
-                return render(request, "shop/signup.html", {"error": "username exists"})
+                return render(request, "shop/signup.html", {"error": "Email already exists"})
             user = User.objects.create_user(username, email, password)
             if developer:
-                if Group.objects.filter(name='developer').exists():
-                    dev_groups = Group.objects.get(name="developers")
+                if Group.objects.filter(name="developers").exists():
+                    dev_group = Group.objects.get(name="developers")
                 else:
-                    Group.objects.create(name='developer').save()
-                    dev_groups = Group.objects.get(name="developers")
-                dev_groups.user_set.add(user)
+                    Group.objects.create(name='developers').save()
+                    dev_group = Group.objects.get(name='developers')
+                dev_group.user_set.add(user)
                 Developer.objects.create(user=user).save()
             else:
                 Player.objects.create(user=user).save()
             user.save()
             login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-            return redirect("shop:index")
+        return redirect("shop:index")
     else:
         return redirect("shop:signup")
 
@@ -96,15 +97,35 @@ def play_game(requests, game_id):
     pass
 
 def developer_view(request):
-    pass
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("shop:login")
+        if user.groups.filter(name="developers").count() != 0:
+            games = Game.objects.filter(developer=user.developer.id)
+            statistics = []
+            for game in games:
+                transactions = Transaction.objects.filter(game=game.id)
+                for transaction in transactions:
+                    statistics.append(transaction)
+            return render(request, "shop/developer.html", {"statistics": statistics})
+        else:
+            return redirect("shop:index")
+
 def search(request):
     pass
 
-def publish(request):
+def publish_page_view(request):
     pass
 
 def developer_games(request):
     pass
 
 def edit_game(request, game_id):
+    pass
+
+def create_game(request):
+    pass
+
+def publish_game(request):
     pass
