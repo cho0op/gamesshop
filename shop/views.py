@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
+from django.db import IntegrityError
 from .models import Developer, Player, Game, Transaction
 
 def index(request):
@@ -116,16 +119,55 @@ def search(request):
     pass
 
 def publish_page_view(request):
-    pass
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            redirect("shop:login")
+        if user.groups.filter(name="developers").count() != 0:
+            return render(request, "shop/publish_game_form.html")
+        else:
+            redirect("shop:index")
+
 
 def developer_games(request):
-    pass
+    if request.method=="GET":
+        user=request.user
+        if not user.is_authenticated:
+            redirect("shop:login")
+        if user.groups.filter(name="developers").count()!=0:
+            games = user.developer.game_set.all()
+            return render (request, "shop/developer_games.html", {"games":games})
+        else:
+            redirect("shop:index")
 
 def edit_game(request, game_id):
     pass
 
 def create_game(request):
-    pass
-
-def publish_game(request):
-    pass
+    if request.method=="POST":
+        user=request.user
+        if not user.is_authenticated or user.groups.filter(name="developers").count()==0:
+            return HttpResponse(status=500)
+        developer = user.developer
+        name = request.POST["title"]
+        price = request.POST["price"]
+        url = request.POST["url"]
+        if not name and not url and not price:
+            return render(request, "shop/publish_game_form.html", {"error":"fill all the gaps"})
+        try:
+            float_price=float(price)
+        except:
+            return render(request, "shop/publish_game_form.html", {"error": "price is not a number"})
+        if float_price<=0:
+            return render(request, "shop/publish_game_form.html", {"error": "price must be more then 0"})
+        try:
+            URLValidator()(url)
+        except ValueError:
+            return render(request, "shop/publish_game_form.html", {"error": "URL is not valid"})
+        try:
+            Game.objects.create(name=name, price=float_price, url=url, developer=developer)
+        except(ValidationError, IntegrityError) as e:
+            return render(request, "shop/publish_game_form.html", {"error": "URL is not uniq"})
+        return redirect("shop:developer_games")
+    else:
+        redirect("shop:signup")

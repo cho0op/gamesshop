@@ -4,7 +4,7 @@
     <list default="true" id="fe891d1f-543d-43a3-946c-a54920318452" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/publisg_game_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/publish_game_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -87,7 +87,8 @@
       <option name="presentableId" value="Default" />
       <updated>1586681714011</updated>
       <workItem from="1586681715299" duration="9993000" />
-      <workItem from="1586854541576" duration="9031000" />
+      <workItem from="1586854541576" duration="9631000" />
+      <workItem from="1586957248321" duration="4063000" />
     </task>
     <servers />
   </component>
