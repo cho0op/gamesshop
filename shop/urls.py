@@ -19,5 +19,6 @@ urlpatterns = [
     path('developer/publish_game/', views.create_game, name='publish_game'),
     path('developer/mygames/', views.developer_games, name='developer_games'),
     path('developer/games/<int:game_id>/edit/', views.edit_game, name='editgame'),
-
+    path('developer/games/<int:game_id>/update/', views.edit_game_update, name='updategame'),
+    path('developer/games/<int:game_id>/delete/', views.edit_game_delete, name='deletegame'),
 ]

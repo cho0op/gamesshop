@@ -13,6 +13,7 @@
             <p class="panel-heading" style="text-align:center">
             <span><strong>Login</strong></span>
             </p>
+
             <div class="panel-block">
                  <form action="{% url 'shop:loguser' %}" method="post">
                       {% csrf_token %}
@@ -28,6 +29,7 @@
                               </span>
                             </div>
                       </div>
+
                       <div class="field">
                           <label class="label">Password</label>
                           <div class="control has-icons-left">
@@ -36,10 +38,12 @@
                                 <i class="fas fa-lock"></i>
                               </span>
                           </div>
+
                       </div>
                       <div class="field">
                           <div class="control">
                               <button class="button is-success is-outlined is-fullwidth" type="submit" value="Login">Login</button>&nbsp;
+
                            </div>
                       </div>
                   </form>

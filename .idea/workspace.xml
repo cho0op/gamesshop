@@ -4,7 +4,18 @@
     <list default="true" id="fe891d1f-543d-43a3-946c-a54920318452" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shop/templates/shop/publisg_game_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/publish_game_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/developer.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/developer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/developer_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/developer_base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/developer_games.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/developer_games.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/player_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/player_base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/publish_game_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/publish_game_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/templates/shop/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/shop/templates/shop/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shop/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shop/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/shop/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

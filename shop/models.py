@@ -13,7 +13,7 @@ class Developer(models.Model):
         return self.user.username
 
 class Game(models.Model):
-    name=models.CharField(max_length=30, null=False, blank=False, unique=False)
+    title=models.CharField(max_length=30, null=False, blank=False, unique=False)
     price = models.FloatField(null=False, blank=False, unique=False)
     url = models.URLField(max_length=300, null=False, blank=False, unique=True)
     developer = models.ForeignKey(Developer, on_delete=models.CASCADE)

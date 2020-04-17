@@ -141,7 +141,19 @@ def developer_games(request):
             redirect("shop:index")
 
 def edit_game(request, game_id):
-    pass
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("shop:login")
+        if user.groups.filter(name="developers").count() == 0:
+            return redirect("shop:index")
+        game = get_object_or_404(Game, pk=game_id)
+        if game.developer.user_id == user.id:
+            return render(request, "shop/edit_game.html", {"game": game})
+        else:
+            return HttpResponse(status=500)
+    else:
+        return HttpResponse(status=500)
 
 def create_game(request):
     if request.method=="POST":
@@ -149,10 +161,11 @@ def create_game(request):
         if not user.is_authenticated or user.groups.filter(name="developers").count()==0:
             return HttpResponse(status=500)
         developer = user.developer
-        name = request.POST["title"]
+        title = request.POST["title"]
         price = request.POST["price"]
         url = request.POST["url"]
-        if not name and not url and not price:
+        validator = URLValidator()
+        if not title and not url and not price:
             return render(request, "shop/publish_game_form.html", {"error":"fill all the gaps"})
         try:
             float_price=float(price)
@@ -161,13 +174,69 @@ def create_game(request):
         if float_price<=0:
             return render(request, "shop/publish_game_form.html", {"error": "price must be more then 0"})
         try:
-            URLValidator()(url)
-        except ValueError:
+            validator(url)
+        except ValidationError:
             return render(request, "shop/publish_game_form.html", {"error": "URL is not valid"})
         try:
-            Game.objects.create(name=name, price=float_price, url=url, developer=developer)
+            Game.objects.create(title=title, price=float_price, url=url, developer=developer)
         except(ValidationError, IntegrityError) as e:
             return render(request, "shop/publish_game_form.html", {"error": "URL is not uniq"})
         return redirect("shop:developer_games")
     else:
         redirect("shop:signup")
+
+def edit_game_update(request, game_id):
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=500)
+        if user.groups.filter(name="developers").count() == 0:
+            return HttpResponse(status=500)
+        game = get_object_or_404(Game, pk=game_id)
+        if game.developer.user_id == user.id:
+            title = request.POST["title"]
+            price = request.POST["price"]
+            url = request.POST["url"]
+            if not title and not price and not url:
+                return render(request, "shop/edit_game.html", {"error": "At least one of the field must be filled",
+                    "game":game})
+            if title.strip():
+                Game.objects.filter(pk=game_id).update(title=title)
+            if price.strip():
+                try:
+                    float_price = float(price)
+                except ValueError:
+                    return render(request, "shop/edit_game.html",{"error": "Price is not number",
+                        "game":game})
+                if float_price <= 0:
+                    return render(request, "shop/edit_game.html",{"error": "Price is negative",
+                        "game":game})
+                Game.objects.filter(pk=game_id).update(price=price)
+            if url.strip():
+                try:
+                    URLValidator()(url)
+                except ValidationError:
+                    return render(request, "shop/edit_game.html",{"error": "URL is malformed",
+                        "game":game})
+                try:
+                    Game.objects.filter(pk=game_id).update(url=url)
+                except (ValidationError, IntegrityError) as e:
+                    return render(request, "shop/edit_game.html",{"error": "URL is not unique",
+                        "game":game})
+            return redirect("shop:developer_games")
+        else:
+            return HttpResponse(status=500)
+    else:
+        return HttpResponse(status=500)
+
+def edit_game_delete(request,game_id):
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=500)
+        if user.groups.filter(name="developers").count() == 0:
+            return HttpResponse(status=500)
+        game = get_object_or_404(Game, pk=game_id)
+        if game.developer.user_id == user.id:
+            Game.objects.get(pk=game_id).delete()
+            return redirect("shop:developer_games")
