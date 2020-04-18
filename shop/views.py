@@ -116,7 +116,19 @@ def developer_view(request):
             return redirect("shop:index")
 
 def search(request):
-    pass
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=500)
+        if user.groups.filter(name="developers").count() != 0:
+            return HttpResponse(status=500)
+        query = request.POST["q"]
+        if not query:
+            return render(request, "shop/search_result.html", {"error": "Empty search"})
+        games = Game.objects.filter(title__icontains=query)
+        return render(request, "shop/search_result.html", {"games": games, "query": query})
+    else:
+        return HttpResponse(status=500)
 
 def publish_page_view(request):
     if request.method == "GET":
@@ -240,3 +252,5 @@ def edit_game_delete(request,game_id):
         if game.developer.user_id == user.id:
             Game.objects.get(pk=game_id).delete()
             return redirect("shop:developer_games")
+def game_info(request):
+    pass
